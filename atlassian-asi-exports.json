@@ -1,0 +1,91 @@
+
+"Description" : "Pre-deployment stack for the Atlassian Products"
+
+"Parameters" : {
+  
+  "AtlassianDefaultKey" : {
+    "Type" : "AWS::EC2::KeyPair::KeyName",
+    "Description" : "Enter the default key"
+  },
+
+  "AtlassianPriNets" : {
+    "Type" : "List<AWS::EC2::Subnet::Id>",
+    "Description" : "Enter the list of 2 private subnets."
+  },
+
+
+  "AtlassianPubNets" : {
+    "Type" : "List<AWS::EC2::Subnet::Id>",
+    "Description" : "Enter the list of 2 public subnets."
+  },
+
+    "AtlassianVPCID" : {
+    "Type" : "AWS::EC2::VPC::Id",
+    "Description" : "Enter the VPC ID"
+  },
+
+}
+
+"Resources" : {
+
+  "EIP1" : {
+    "Type" : "AWS::EC2::EIP"
+    
+  },
+
+  "EIP2" : {
+    "Type" : "AWS::EC2::EIP"
+    
+  }  
+}
+
+"Outputs" : {
+  
+  "DefaultKey" : {
+    "Description" : "Information about the value",
+    "Value" : { "Ref" : "AtlassianDefaultKey" },
+    "Export" : {
+      "Name" : "ATL-DefaultKey"
+    }
+  },
+
+  "NAT1EIP" : {
+    "Description" : "Information about the value",
+    "Value" : { "Ref" : "EIP1" },
+    "Export" : {
+      "Name" : "ATL-NAT1EIP"
+    }
+  },
+
+    "NAT2EIP" : {
+    "Description" : "Information about the value",
+    "Value" : { "Ref" : "EIP2" },
+    "Export" : {
+      "Name" : "ATL-NAT2EIP"
+    }
+  },
+
+    "PriNets" : {
+    "Description" : "Information about the value",
+    "Value" : {"Fn::Join": [",", { "Ref": "AtlassianPriNets" }]},
+    "Export" : {
+      "Name" : "ATL-PriNets"
+    }
+  },
+
+    "PubNets" : {
+    "Description" : "Information about the value",
+    "Value" : {"Fn::Join": [",", { "Ref": "AtlassianPubNets" }]},
+    "Export" : {
+      "Name" : "ATL-PubNets"
+    }
+  },
+
+    "VPCID" : {
+    "Description" : "Information about the value",
+    "Value" : { "Ref" : "AtlassianVPCID" },
+    "Export" : {
+      "Name" : "ATL-VPCID"
+    }
+  }
+}
